@@ -9,15 +9,15 @@ const UrlShortner = () => {
   const [url, setUrl] = useState("");
   const renderInput = () => {
     return (
-      <>
+      <div className="d-flex">
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
+          <label htmlFor="url-input" className="form-label">
+            URL
           </label>
           <input
-            type="password"
+            type="input"
             className="form-control"
-            id="exampleInputPassword1"
+            id="url-input"
             value={url}
             onChange={(e) => {
               setUrl(e?.target?.value);
@@ -27,7 +27,7 @@ const UrlShortner = () => {
         <button type="submit" className={`btn btn-primary`}>
           Submit
         </button>
-      </>
+      </div>
     );
   };
 
