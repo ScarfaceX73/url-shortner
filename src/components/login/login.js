@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { checkStatus, login, logout } from "../services/auth";
 
 const Login = () => {
@@ -7,10 +8,11 @@ const Login = () => {
 
   const [loading, setLoading] = useState(true);
   const [userStatus, setUserStatus] = useState(false);
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     await login({ email, password: pass });
-    window?.location?.reload();
+    navigate("/url")
   };
   const check = async () => {
     const status = await checkStatus();
@@ -31,7 +33,8 @@ const Login = () => {
 
   const renderLoginForm = () => {
     return (
-      <div className="w-50">
+      <div className="border p-10 rounded shadow-lg">
+        <div className='text-lg font-semibold my-3'>Login</div>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
@@ -66,12 +69,26 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className={`btn btn-primary`}
+          className={`btn btn-primary bg-blue-500`}
           onClick={handleLogin}
           disabled={!!loading}
         >
           Submit
         </button>
+        <div className="my-3">
+          <span className="text-sm text-gray-600"> Not a member? &nbsp;
+            <Link to={'/register'}>
+              Click to register
+            </Link>
+          </span>
+        </div>
+        <div className="my-3">
+          <span className="text-xs text-gray-700 text-blue-900"> Forgor password? &nbsp;
+            <Link to={'/forgot-password'}>
+              click here to recover your account
+            </Link>
+          </span>
+        </div>
       </div>
     );
   };

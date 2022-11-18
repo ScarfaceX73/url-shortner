@@ -1,53 +1,74 @@
 import axios from "axios";
+const urlEnv = process.env.REACT_APP_BE_URL
+console.log(urlEnv)
+
 const login = async (payload) => {
   try {
-    const url = "https://jwt-auth-be-123.herokuapp.com/users/login";
+    const url = `${urlEnv}/users/login`;
     const response = await axios.post(
       url,
       { ...payload },
-      { withCredentials: true, responseType: "json" }
+      { withCredentials: true, responseType: "json", baseURL: "" }
     );
-    console.log(response);
-    const dd = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      mode: "cors",
-      body: JSON.stringify(payload),
-    });
-
-    const rr = await dd.json();
-    console.log("rr", rr);
+    return response
   } catch (error) {
-    console.log(error);
+    throw Error(error?.response?.data?.message)
   }
 };
 
 const checkStatus = async () => {
   try {
-    const url = "https://jwt-auth-be-123.herokuapp.com/users/";
+    const url = `${urlEnv}/users`;
     const response = await axios.get(url, {
       withCredentials: true,
       responseType: "json",
+      baseURL: ""
     });
     return response?.data;
   } catch (error) {
-    console.log(error);
+    return
   }
 };
 const logout = async () => {
   try {
-    const url = "https://jwt-auth-be-123.herokuapp.com/users/logout";
+    const url = `${urlEnv}/users/logout`;
     const response = await axios.get(url, {
       withCredentials: true,
       responseType: "json",
+      baseURL: ""
     });
     return response?.data;
   } catch (error) {
-    console.log(error);
+    throw Error(error?.response?.data?.message)
   }
 };
 
-export { login, checkStatus, logout };
+const register = async (payload) => {
+  try {
+    const url = `${urlEnv}/users/register`;
+    const response = await axios.post(
+      url,
+      { ...payload },
+      { withCredentials: true, responseType: "json", baseURL: "" }
+    );
+    return response
+  } catch (error) {
+    throw Error(error?.response?.data?.message)
+  }
+}
+
+const forgotPassword = async (payload) => {
+  try {
+    const url = `${urlEnv}/users/forgot-password`;
+    const response = await axios.post(
+      url,
+      { ...payload },
+      { withCredentials: true, responseType: "json", baseURL: "" }
+    );
+    return response
+  } catch (error) {
+    throw Error(error?.response?.data?.message)
+  }
+}
+
+export { login, checkStatus, logout, register, forgotPassword };
